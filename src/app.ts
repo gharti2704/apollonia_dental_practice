@@ -24,10 +24,21 @@ if (process.env.NODE_ENV === 'development') {
     })
   );
 }
-
 // app.use('/api/auth', router);
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Hello World');
+});
+
+app.post('/api/department', (req, res) => {
+  const department = req.body;
+    console.log(department);
+    res.send({message: 'Department created', department});
+});
+
+app.post('/api/employee', (req, res) => {
+  const employee = req.body;
+    console.log(employee);
+    res.send({message: 'Employee created', employee});
 });
 
 const port = process.env.PORT || 8000;

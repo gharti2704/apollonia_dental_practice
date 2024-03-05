@@ -1,13 +1,21 @@
 version: '3'
-
 services:
   app:
-    build: .
+    restart: always
+    build: *
     ports:
-      - '8080:8080'
+      - ${PORT}:${PORT}
     depends_on:
       - mongo
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DATABASE=${DATABASE}
+    volumes:
+      - .:/app
   mongo:
     image: mongo
+    command: --quiet
     volumes:
-      - 'mongodb://mongo-data:/data/apollonia'
+      - mongo-data:/data/db
+volumes:
+  mongo-data:
