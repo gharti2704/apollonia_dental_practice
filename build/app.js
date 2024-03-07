@@ -10,6 +10,7 @@ const express_1 = __importDefault(require("express"));
 // import { db } from './data/index.js';
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
+const data_1 = require("./data,");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
@@ -39,8 +40,13 @@ app.post('/api/employee', (req, res) => {
     res.send({ message: 'Employee created', employee });
 });
 const port = process.env.PORT || 8000;
-app.listen(port, async () => {
-    console.log(`Server is running on http://localhost:${port} - ${process.env.NODE_ENV} mode`);
-    // await db.initDb();
-});
+try {
+    app.listen(port, async () => {
+        console.log(`Server is running on http://localhost:${port} - ${process.env.NODE_ENV} mode`);
+        await data_1.db.initDb();
+    });
+}
+catch (error) {
+    console.log('Error while starting the server: ', error);
+}
 //# sourceMappingURL=app.js.map
