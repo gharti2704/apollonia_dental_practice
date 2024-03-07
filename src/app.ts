@@ -5,6 +5,7 @@ import express, { Express } from 'express';
 // import { db } from './data/index.js';
 import morgan from 'morgan';
 import cors from 'cors';
+import {db} from "./data,";
 
 const app: Express = express();
 
@@ -42,9 +43,13 @@ app.post('/api/employee', (req, res) => {
 });
 
 const port = process.env.PORT || 8000;
-app.listen(port, async () => {
-  console.log(
-    `Server is running on http://localhost:${port} - ${process.env.NODE_ENV} mode`
-  );
-  // await db.initDb();
-});
+try {
+  app.listen(port, async () => {
+    console.log(
+      `Server is running on http://localhost:${port} - ${process.env.NODE_ENV} mode`
+    );
+    await db.initDb();
+  });
+} catch (error) {
+  console.log('Error while starting the server: ', error);
+}
